@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.IO;
+using System.Reflection.PortableExecutable;
 
-namespace MyApp // Note: actual namespace depends on the project name.
+namespace MyApp 
 {
     internal class Program
     {
@@ -11,8 +12,14 @@ namespace MyApp // Note: actual namespace depends on the project name.
             Menu();
         }
 
+        static void LogoMenu(){
+            Console.WriteLine(@"
+▀█▀ █▀▀ ▀▄▀ ▀█▀ █▀▀ █▀▄ █ ▀█▀ █▀█ █▀█
+░█░ ██▄ █░█ ░█░ ██▄ █▄▀ █ ░█░ █▄█ █▀▄");
+        }
         static void Menu() {
             Console.Clear();
+            LogoMenu();
             Console.WriteLine("O que você deseja fazer? ");
             Console.WriteLine("1 - Abrir arquivo");
             Console.WriteLine("2 - Criar novo arquivo");
@@ -27,7 +34,21 @@ namespace MyApp // Note: actual namespace depends on the project name.
             }
     }
 
-        static void Abrir(){}
+        static void Abrir() {
+            Console.Clear();
+            Console.WriteLine("Qual o caminho do arquivo?");
+            string path = Console.ReadLine();
+
+            using(var file = new StreamReader(path))
+            {
+                string text = file.ReadToEnd();
+                Console.WriteLine(text); // Vai ler o arquivo até o final
+            }
+
+            Console.WriteLine();
+            Console.ReadLine();
+            Menu();
+        }
 
         static void Editar() {
             Console.Clear();
@@ -44,7 +65,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             // Enquanto o usuário não pressionar a tecla ESC continue digitando
             while(Console.ReadKey().Key != ConsoleKey.Escape);
 
-            Console.Write(text);
+            Salvar(text);
         }
 
         static void Salvar(string text) {
@@ -55,6 +76,10 @@ namespace MyApp // Note: actual namespace depends on the project name.
             using(var file = new StreamWriter(path)) {
                 file.Write(text);
             }
+
+            Console.WriteLine($"Arquivo {path} salvo com sucesso!");
+            Console.ReadLine();
+            Menu();
         }
     
    }
