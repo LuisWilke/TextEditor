@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using System.IO;
 
 namespace MyApp // Note: actual namespace depends on the project name.
 {
@@ -33,8 +35,26 @@ namespace MyApp // Note: actual namespace depends on the project name.
             Console.WriteLine("********************");
             string text = "";
             
+
+            do
+            {
+                text += Console.ReadLine();
+                text += Environment.NewLine; // Breaking line end of writing        
+            }
             // Enquanto o usuário não pressionar a tecla ESC continue digitando
             while(Console.ReadKey().Key != ConsoleKey.Escape);
+
+            Console.Write(text);
+        }
+
+        static void Salvar(string text) {
+            Console.Clear();
+            Console.WriteLine("Qual caminho para salvar o arquivo?");
+            var path = Console.ReadLine();
+
+            using(var file = new StreamWriter(path)) {
+                file.Write(text);
+            }
         }
     
    }
