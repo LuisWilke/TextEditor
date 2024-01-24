@@ -27,7 +27,15 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
         static void Abrir(){}
 
-        static void Editar(){}
+        static void Editar() {
+            Console.Clear();
+            Console.WriteLine("Digite seu texto abaixo (ESC para sair)");
+            Console.WriteLine("********************");
+            string text = "";
+            
+            // Enquanto o usuário não pressionar a tecla ESC continue digitando
+            while(Console.ReadKey().Key != ConsoleKey.Escape);
+        }
     
    }
 }
